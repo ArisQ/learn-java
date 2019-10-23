@@ -162,3 +162,19 @@
 
     * ``false`` ``true``
     * *整型值与布尔值不能相互转换*
+
+* 变量
+
+  * 变量类型（type）
+  * 变量名
+    * 字母开头，字母数字构成的序列，包括``A-Z a-z _ $ $``和其他语言字母Unicode字符，如$\pi$
+      * $只用在Java编译器或其他工具生成的名字
+    * 大小写敏感
+    * 判断字符是否属于Java“字母"
+      * ``Character``类的``isJavaIdentifierStart``和``isJavaIdentifierPart``
+  * 变量初始化：必须显式初始化
+  * 常量
+    * ``final``关键字指示常量
+    * 习惯上常量名全大写
+    * 类常量：``static final``
+    * ``const``保留关键字，未使用，常量必须使用``final``
