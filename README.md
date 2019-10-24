@@ -256,3 +256,29 @@
       ```
 
     * 枚举类型可以存储null
+
+* 字符串
+
+  * Java没有内置字符串类型，由标准库提供String类
+    * 编译器如何知道字符串值面值是String类？（编译器不知道，String类知道如何从字面量初始化，猜想，未确认。字符串字面值在编译器中如何表示，CharSequence?）
+  * 子串 ``substring``
+  * 拼接``+``
+    * **任何Java对象都能转换成字符串**
+  * 不可变字符串
+  * 判断相等 ``equals``
+  * 空串 Null串
+  * 码点和代码单元
+    * char是一个代码单元，大多数Unicode使用一个代码单元表示，辅助字符需要两个代码单元（一对）
+    * ``length``返回代码单元数量
+    * ``codePointCount``返回码点数量
+    * **不要使用char类型**
+  * String API
+    * ``charAt codePointAt offsetByCodePoints compareTo equals indexOf lastIndexOf length codePointCount replace substring toLowerCase toUpperCase trim join``
+  * 联机API文档
+    * [Java 8 API](https://docs.oracle.com/javase/8/docs/api/)
+  * 构建字符串 StringBuilder/StringBuffer
+    * ``append``
+    * ``toString``
+    * StringBuffer允许多线程，但效率稍低
+    * 其他API ``length appendCodePoint setCharAt insert delete``
+
