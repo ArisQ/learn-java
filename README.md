@@ -15,7 +15,7 @@
   * 可移植性
   * 解释性
   * 高性能
-  * 对线程
+  * 多线程
   * 动态性
 
 * Java语言发展状况
@@ -281,4 +281,69 @@
     * ``toString``
     * StringBuffer允许多线程，但效率稍低
     * 其他API ``length appendCodePoint setCharAt insert delete``
+
+* 输入输出
+
+  * 输入
+
+    * ``Scanner(System.in)`` ``java.util``包
+    * ``scanner.nextLine()`` ``nextInt() nextDouble() hasNext() hasNextInt() hasNextDouble()``
+    * 读取密码
+      * ``Console console=System.console()``
+      * ``console.readLine()``
+      * ``console.readPassword()``
+
+  * 格式化输出
+
+    * ``System.out.print()``
+
+    * ``System.out.printf()``
+
+      * 以``%``开始的格式说明符用参数替换
+
+      * | 转换符 | 类型                  | 举例                                             |
+        | ------ | --------------------- | ------------------------------------------------ |
+        | d      | 十进制整数            | 159                                              |
+        | x      | 十六进制整数          | 9f                                               |
+        | o      | 八进制整数            | 237                                              |
+        | f      | 定点浮点数            | 15.9                                             |
+        | e      | 指数浮点数            | 1.59e+01                                         |
+        | g      | 通用浮点数            |                                                  |
+        | a      | 十六进制浮点数        | 0.1.fccdp3                                       |
+        | s      | 字符串                | Hello                                            |
+        | c      | 字符                  | H                                                |
+        | b      | 布尔                  | True                                             |
+        | h      | 散列码                | 42628b2                                          |
+        | tx或Tx | 日期时间（T强制大写） | 已经过时，应当改为使用java.time类；x见时间转换符 |
+        | %      | 百分号                | %                                                |
+        | n      | 与平台有关的行分隔符  |                                                  |
+
+      * | 标志               | 目的                                        |
+        | ------------------ | ------------------------------------------- |
+        | +                  | 打印正数和负数的符号                        |
+        | 空格               | 在正数前添加空格                            |
+        | 0                  | 数字前面补0                                 |
+        | -                  | 左对齐                                      |
+        | (                  | 将负数括在括号内                            |
+        | ,                  | 添加分组分隔符                              |
+        | \#（对于f格式）    | 包含小数点                                  |
+        | \#（对于x或0格式） | 添加前缀0x或0                               |
+        | $                  | 给定被格式化的参数的索引，参数索引值从1开始 |
+        | <                  | 格式化前面说明的数值                        |
+
+      * ``String.format``
+
+      * 时间格式化，应当使用java.time包中的方法
+
+        * ``c F D T r R Y y C B ...``
+
+  * 文件输入输出
+
+    * ``Scanner(Paths.get("myfile.txt"), "UTF-8")``
+    * ``PrintWriter("myfile.txt", "UTF-8")``
+    * 启动路径：命令解释器的当前路径；IDE中由IDE控制
+      * ``System.getProperty("user.dir")``
+    * ``throws IOException``
+
+    ​
 
