@@ -345,5 +345,28 @@
       * ``System.getProperty("user.dir")``
     * ``throws IOException``
 
-    ​
+* 控制流程
+
+  * 块作用域  块（block）即复合语句
+  * 条件语句
+    *  ``if (condition) statement``
+    * ``if (condition) staement1 else statement2``
+    * ``if/else if``
+  * 循环
+    * ``while (condition) statement``
+    * ``do statement while (condition)``
+  * 确定循环
+    * ``for(int i=0;i<10;i++) { System.out.println(i); }``
+  * 多重选择
+    * ``switch``
+    * case标签可以是
+      * char byte short int 常量表达式
+      * 枚举常量
+      * 字符串字面量（Java SE 7开始）
+  * 中断控制流程
+    * ``goto``保留字，但未使用
+    * ``break``
+    * ``continue``
+    * 带标签``break``
+
 
