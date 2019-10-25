@@ -377,4 +377,30 @@
     * ``valueOf``
     * ``add multiply divide subtract mod ``
 
+* 数组
+
+  * 声明与初始化数组
+    * ``int[] a = new int[100];``
+    * 数组长度不要求是常量
+  * 数组不能改变大小，需要扩展需要用**数组列表 array list**
+  * ``for each``
+    * ``for (variable : collection) statement``
+    * collection必须是数组或者实现``Iterable``接口的对象，如ArrayList
+  * 数组初始化
+    * ``int[] smallPrimes={2,3,5,7,11,13}``
+    * 匿名数组 ``new int[] {17,19,23,29,31,37}``
+  * 数组拷贝
+    * 直接赋值则两个变量指向同一个数组
+    * ``Arrays.copyOf``
+  * 命令行参数
+    * args中不包含程序名
+  * 数组排序
+    * ``Arrays.sort()``
+    * 其他API ``copyOfRange binarySearch fill equals``
+  * 多维数组
+    * ``double[][] balances``
+    * ``balances = new double[NYEARS][NRATES]``
+    * ``for each``不能自动处理二维数组，需要嵌套循环
+  * 不规则数组
+
 
