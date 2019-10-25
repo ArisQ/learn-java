@@ -1,4 +1,4 @@
-package love.lipbcu.learnjava.p0006_controlflow;
+package love.lipbcu.learnjava.p006_controlflow;
 
 public class ControlFlow {
     public static void main(String[] args) {
