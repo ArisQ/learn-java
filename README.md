@@ -404,3 +404,214 @@
   * 不规则数组
 
 
+### 对象与类
+
+* 面向对象程序设计概述
+
+  * OOP
+  * ``算法+数据结构=程序`` ``Algorithms + Data Structures = Programs`` Niklaus Wirth
+  * 类 class
+    * 构造 construct
+    * 实例 instance
+    * 封装 encapsulation
+    * 实例域 instance field
+    * 方法 method
+    * 状态 state
+    * 继承 inheritance
+    * Object类
+  * 对象
+    * 对象的三个特性
+      * 对象的行为 behavior
+      * 对象的状态 state
+      * 对象标识 identity
+  * 识别类
+  * 类之间的关系
+    * 依赖 dependence： uses-a
+    * 聚合 aggregation：has-a
+    * 继承 inheritance：is-a
+    * UML
+
+* 预定义类
+
+  * Math
+  * Date
+  * LocalDate
+    * epoch 纪元 UTC 1970年1月1日 00:00:00
+    * UTC Coordinated Universal Time
+    * ``LocalDate.now()``
+    * ``plusDays getYear getMonthValue getDayOfMonth``
+  * 构造器 constructor
+
+* 自定义类
+
+  * ```java
+    class ClassName {
+        field1;
+        field2;
+        ...
+        constructor1;
+        constructor2;
+        ...
+        method1;
+        method2;
+    }
+    ```
+
+  * ​
+
+  * 隐式参数与显式参数
+    * this
+
+  * 类的访问权限
+
+  * 私有方法 private
+
+  * final 实例域
+
+* 静态域与静态方法 ``static``
+
+  * 静态域
+  * 静态常量
+  * 静态方法
+  * 工厂方法
+  * main方法
+
+* 方法参数
+
+  * 按值调用 call by value
+  * 按引用调用 call by reference
+
+* 对象构造
+
+  * 重载 overloading
+
+    * 重载解析 overloading resolution
+
+  * 方法的签名 signature
+
+  * 默认域初始化 `` 0 false null`
+
+  * 无参数构造器
+
+  * 显式域初始化
+
+  * 参数名
+
+    * ``this.name=name``
+
+  * 调用另一个构造器
+
+    * ``this()``
+
+  * 初始化块
+
+    * 对象初始化块
+
+    * 静态初始化块
+
+    * ```java
+      class Employee {
+          private static int nextId;
+          // static initialization block
+          static {
+              nextId=new Random().nextInt(1000);
+          }
+          // object initialization block
+          {
+              id=nextId;
+              nextId++;
+          }
+      }
+      ```
+
+  * 对象析构与finalize
+
+    * Java自动垃圾回收，不支持析构器
+    * finalize方法在垃圾回收器清楚对象之前调用
+
+* 包 package
+
+  * 包名建议域名逆序
+  * 类导入
+    * ``java.time.LocalDate``
+    * ``import java.util.*;``
+  * 静态导入
+    * ``import static java.lang.System.*;``导入静态方法和静态域
+  * 类放入包中
+    * ``package com.horstmann.corejava;``
+  * 包的作用域
+
+* 类路径
+
+  * JAR  Java归档，zip格式
+  * 类路径 class path
+  * 设置类路径
+    * ``java -classpath /home/user/classdir:.:/home/user/archives/archive.jar MyProg``
+    * ``export CLASSPATH=/home/user/classdir:.``
+
+* 文档注释
+
+  * ```java
+    /**
+     *
+     */
+    ```
+
+  * javadoc实用程序（utility）抽取信息
+
+    * 包
+    * 公有类和接口
+    * 公有的和受保护的构造器和方法
+    * 公有的和受保护的域
+
+  * 文字注释在标记后紧跟自由格式文本（free-form text）
+
+    * 标记角以@开头，如@author或@param
+    * 自由格式文本，可以使用HTML修饰符，如``<strong></strong> <em></em> <img> {@code }``，不能使用``<h1> <hr>``
+
+  * 类注释
+
+    * import之后，类之前
+
+  * 方法注释
+
+    * @param
+    * @return
+    * @throws
+
+  * 域注释
+
+    * 公有域（通常指静态常量）
+
+  * 通用注释
+
+    * @author
+    * @version
+    * @since
+    * @deprecated
+    * @see
+      * ``@see <a href="https://exmaple.com">link name</a>``
+    * ``{@link package.class#feature label}``
+
+  * 包和概述注释
+
+    * 包注释需在包目录添加单独文件
+      * ``package.html``，会抽取``<body>...</body>``之间的文本
+      * ``package-info.java``文件，必须包含``/**  */``界定的注释
+    * 概述性注释
+      * ``overview.html``
+
+  * 注释抽取
+
+    * ``javadoc -d docDirectory nameOfPackage``
+
+* 类设计技巧
+
+  * 一定要保证数据私有
+  * 一定要对数据初始化
+  * 不要在类中使用过多的基本类型
+  * 不是所有的域都需要独立的域访问器或域更改器
+  * 将职责过多的类进行分解
+  * 类名和方法名要能够体现他们的职责
+  * 优先使用不可变类
+
