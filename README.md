@@ -615,3 +615,140 @@
   * 类名和方法名要能够体现他们的职责
   * 优先使用不可变类
 
+
+### 继承
+
+* 类、超类和子类
+
+  * ``extends``
+  * Java所有继承都是公有继承
+  * **超类superclass**、基类base class、父类parent class
+  * **子类subclass**、派生类derived class、孩子类child class
+  * 覆盖方法 override
+  * ``super.getSalary()`` ``super(name,salary)``
+  * 多态polymorphism、动态绑定dynamic binding
+  * Java中不需要声明为virtual，默认是动态绑定，标记为final使方法不具有virtual特征
+  * 继承层次 inheritance hierarchy
+  * 继承链 inheritance chain
+  * **Java不支持多继承**
+  * 强制类型转换
+    * ``instanceof``
+  * 抽象类 ``abstract``
+  * 受保护访问 ``protected``
+    * 仅本类可见 private
+    * 所有类可见 public
+    * 本包和子类可见 protected
+    * 本包可见，不需要修饰符，默认
+
+* Object 所有类的超类
+
+  * 不明确指出超类，则超类是Object类
+  * 只有基本类型不是超类，如数值，字符，布尔
+  * ``equals``
+    * 自反性：任何非空``x``，``x.equals(x)==true``
+    * 对称性：``y.equals(x)==true`` <==> ``x.equals(y)==true``
+    * 传递性：``x.equals(y)==true  y.equals(x)==true`` 则 ``x.equals(z)==true``
+    * 一致性：``x y``无变化，则 ``x.equals(y)`` 返回同样的结果
+    * 对于任意非空引用``x``，``x.equals(null)``返回``false``
+  * ``hashCode`` 散列码
+  * ``toString``
+  * ``getClass``
+    * ``getName``
+    * ``getSuperclass()``
+
+* 泛型数组列表
+
+  * ``ArrayList<E>``
+  * ``add size ensureCapacity trimToSize``
+  * ``void set(index, E obj)``
+  * ``E get(index)``
+  * ``void add(int index, E obj)``
+  * ``E remove(int index)``
+
+* 对象包装器与自动装箱
+
+  * 包装器 wrapper
+
+    * ``Integer Long Float Double Short Byte`` 派生于``Number``
+    * `` Character Void Boolean``
+    * 包装器是不可变类，构造以后不允许修改
+
+  * 自动装箱 ``autoboxing`` ``autowrapper``
+
+  * 装箱和拆箱是编译器实现的
+
+  * ```java
+    Integer n=3;
+    n++; // 拆箱 自增 装箱
+    ```
+
+  * ``Integer.partInt(s)``
+
+* 参数数量可变的方法
+
+  * ``public PrintStream printf(String fmt, Object... args) { return format(fmt,args) }``
+
+* 枚举类
+
+  * 比较枚举类永远不要使用``equals``，应直接使用``==``
+  * 枚举类可以添加构造器，方法和域
+  * ``valueOf ordinal compareTo toString``
+
+* 反射 reflective
+
+  * 反射库 reflection library
+
+  * Class 类
+
+    * 获取Class对象的方法
+      * ``object.getClass()``
+      * ``Class.forName("java.util.Random")``
+      * ``T.class`` 如 ``Random.class int.class int[].class``
+    * ``newInstance``
+
+  * 捕获异常
+
+    * 异常类型
+
+      * 未检查异常
+      * 已检查异常
+
+    * ```java
+      try {
+          // statements that might throw exceptions
+      } catch (Execption e) {
+          // handler exception
+          e.printStackTrace();
+      }
+      ```
+
+    * ``Throwable`` ``Execption``
+
+  * 利用反射分析类
+
+    * ``java.lang.relect``包
+      * ``Field``
+      * ``Method``
+        * ``Object invoke(Object obj, Object.. args)``
+      * ``Constrcutor``
+
+  * 运行时使用反射分析对象
+
+  * 使用反射编写泛型数组代码
+
+  * 调用任意方法
+
+* 继承的设计技巧
+
+  * 将公共操作和域放在超类
+  * 不要使用受保护（protected）的域
+  * 使用继承实现”is-a“关系
+  * 除非所有继承的方法都有意义，否则不要使用继承
+  * 在覆盖方法时，不要改变预期的行为
+  * 使用多态，而非类型信息
+  * 不要过多地使用反射
+
+
+
+
+
