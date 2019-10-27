@@ -797,6 +797,89 @@
 
     * 对象克隆 Cloneable
 
+* Lambda表达式
 
+  * lambda表达式是可传递的代码块
 
+  * ```java
+    (String first, String second) -> first.length()-second.length()；
+    (String first, String second) -> { return first.length()-second.length() }
+    ```
+
+  * 函数式接口 functional interface
+
+    * 只有一个抽象方法的接口，需要这种接口对象时，可以提供一个lambda表达式
+
+  * 方法引用
+
+    * ```java
+      Timer t=new Timer(1000, System.out.println);
+      ```
+
+    * ``object::instanceMethod``
+
+    * ``Class::staticMethod``
+
+    * ``Class::instanceMethod``
+
+    * ``this::equals  super::instanceMethod``
+
+  * 构造器引用
+
+    * ```java
+      Person::new
+      int[]::new
+      Person[] people = stream.toArray(Person[]::new);
+      ```
+
+  * 变量作用域
+
+    * lambda表达式中只能引用值不会改变的变量
+
+  * 常用的函数式接口
+
+    * | 函数式接口        | 参数类型 | 返回类型 | 抽象方法 | 描述                         | 其他方法                   |
+      | ----------------- | -------- | -------- | -------- | ---------------------------- | -------------------------- |
+      | Runnable          | 无       | void     | run      | 作为无参数或返回值的动作运行 |                            |
+      | Supplier<T>       | 无       | T        | get      | 提供一个T类型的值            |                            |
+      | Consumer<T>       | T        | void     | accept   | 处理一个T类型的值            | andThen                    |
+      | BiConsumer<T,U>   | T, U     | void     | accept   | 处理T和U类型的指             | andThen                    |
+      | Function<T,R>     | T        | R        | apply    | 有一个T类型参数的函数        | compose, andThen, identity |
+      | BiFunction<T,U,R> | T,U      | R        | apply    | 有T和U类型参数的函数         | andThen                    |
+      | UnaryOperator<T>  | T        | T        | apply    | 类型T上的一元函数            | compose, andThen, identity |
+      | BinaryOperator<T> | T, T     | T        | apply    | 类型T上的二元函数            | andThen, maxBy, minBy      |
+      | Predicate<T>      | T        | boolean  | test     | 布尔值函数                   | and, or, negate, isEqual   |
+      | BiPredicate<T>    | T, U     | boolean  | test     | 有两个参数的布尔值函数       | and, or, negate            |
+
+  * 基本类型的函数式接口
+
+    * | 函数式接口         | 参数类型 | 返回类型 | 抽象方法名   |
+      | ------------------ | -------- | -------- | ------------ |
+      | BooleanSupplier    | none     | boolean  | getAsBoolean |
+      | PSupplier          | none     | p        | getAsP       |
+      | PComsumer          | p        | void     | accept       |
+      | ObjPComsumer<T>    | T, p     | void     | accept       |
+      | PFunction<T>       | p        | T        | apply        |
+      | PToQFunction       | p        | q        | applyAsQ     |
+      | ToPFunction<T>     | T        | p        | applyAsP     |
+      | ToPBiFunction<T,U> | T, U     | p        | applyAsP     |
+      | PUnaryOperator     | p        | p        | applyAsP     |
+      | PBinaryOperator    | p, p     | p        | applyAsP     |
+      | PPredicate         | p        | boolean  | test         |
+
+    * p, q为int, long, double; P, Q为Int, Long, Double
+
+  * ``@FunctionalInterface``注解，标记只有一个抽象方法的接口
+
+  * Comparator
+
+    * Comparator接口包含很多方便的静态方法来创建比较器
+
+    * 静态comparing方法，键提取器函数
+
+      * ```java
+        Arrays.sort(people, Comparator.comparing(Person::getName));
+        ```
+
+    * ``nullsFirst naturalOrder reverseOrder``
 
