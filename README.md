@@ -749,6 +749,54 @@
   * 不要过多地使用反射
 
 
+### 接口、Lambda表达式与内部类
+
+* 接口 interface
+
+  * 实现implement接口
+
+  * ```java
+    public interface Comparable {
+        int compareTo(Object other);
+    }
+    public interface Comparable<T>{
+        int compareTo(T other);
+    }
+    class Employee implements Comparable;
+    ```
+
+  * ``default`` 为接口提供默认实现
+
+    * 默认方法冲突
+      * 超类优先
+      * 接口冲突，必须覆盖方法来解决
+
+  * 接口示例
+
+    * 接口与回调 callback
+
+      * ```java
+        public interface ActionListener {
+            void actionPerformed(ActionEvent event);
+        }
+        class TimerPrinter implements ActionListener {
+            public void actionPerformed(ActionEvent event){
+                //...
+            }
+        }
+        new Timer(1000,listener).start();
+        ```
+
+    * Comparator接口
+
+      * ```java
+        public interface Comparator<T> {
+            int compare(T first, T second);
+        }
+        ```
+
+    * 对象克隆 Cloneable
+
 
 
 
