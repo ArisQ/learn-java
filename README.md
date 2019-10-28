@@ -883,3 +883,95 @@
 
     * ``nullsFirst naturalOrder reverseOrder``
 
+* 内部类 inner class
+
+  * 内部类的主要原因
+
+    * 内部类的方法可以访问类定义所在作用域的数据，包括私有数据
+    * 内部类可以对同一个包的其他类隐藏
+    * 使用匿名内部类可以便捷的定义回调函数
+
+  * ```java
+    public class Outer {
+        private int value;
+        public class Inner {
+            public void action() {
+                System.out.println(value);
+            }
+        }
+    }
+    ```
+
+  * 内部类的特殊语法
+
+    * ``OuterClass.this`` 引用外部类的引用
+    * ``outerObject.new InnerClass(Construction parameters)`` 编写内部类的构造器
+    * ``OuterClass.InnerClass`` 引用内部类
+    * **内部类的所有静态域必须是final**
+    * **内部类不能有static方法**
+
+  * ``javap -private ClassName``
+
+    * ``java -private innerClass.TalkingClock\$TimerPrinter``
+
+  * **内部类访问私有域数据，会导致外部类添加静态方法** 如``access$0``
+
+  * 局部内部类
+
+    * ```java
+      public void start() {
+          class TimerPrinter implements ActionListenr {
+              public void actionPerformed(ActionEvent event) {
+              }
+          }
+      }
+      ```
+
+    * 局部类不能用public或private说明符
+
+  * 局部类可以访问局部变量，局部变量必须是事实上final
+
+  * 匿名内部类 anonymous inner class
+
+    * 如果只创建这个类的一个对象，可以不命名，称为匿名内部类
+
+    * ```java
+      new SuperType(construction parameters) {
+          // inner class methods and data
+      }
+      ```
+
+    * **匿名类不能有构造器**
+
+    * 双括号初始化 double brace initialization
+
+      * ```java
+        invite(new ArrayList<String>() {{ add("Harry"),add("Tony") }} )
+        ```
+
+        * 外层括号建立匿名子类，内层括号为对象构造块
+
+  * 静态内部类
+
+    * 将内部类声明为static，可以消除引用
+
+    * ```java
+      class ArrrayAlg {
+          public static class Pair {
+              private double first;
+              private double second;
+              public Pair(double f,doubl s) { first = f; second = s; }
+              // getters
+          }
+          public static Pair minmax(double[] values) { /* ... */ }
+      }
+      // ArrayAlg.Pair
+      ```
+
+    * 声明在接口中的内部类，自动称为static和public类
+
+    * 静态内部类可以有静态域或方法
+
+    * 静态类也可称为嵌套类nested class
+
+
