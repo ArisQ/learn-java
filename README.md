@@ -974,4 +974,201 @@
 
     * 静态类也可称为嵌套类nested class
 
+* 代理 proxy
+
+
+### 异常、断言和日志
+
+* 处理错误
+
+  * 异常处理 exception handler
+
+  * 错误类型
+
+    * 用户输入错误
+    * 设备错误
+    * 物理限制
+    * 代码错误
+
+  * 异常分类
+
+    * Throwable
+      * Error 内部错误和资源耗尽错误
+      * Exception
+        * RuntimeException，程序错误导致的；如果出现RuntimeException，一定是程序的问题
+          * 错误的类型转换
+          * 数组访问越界
+          * 访问null指针
+        * 其他，程序本身没问题，由于I/O错误之类的异常导致的
+          * 试图在文件尾部后面读取数据
+          * 试图打开一个不存在的文件
+          * 试图根据给定字符串查找Class对象，而字符串表示的类不存在
+    * 派生于Error类或RuntimeException类的所有异常为非受查异常unchecked
+    * 其他为受查异常unchecked
+
+  * 方法需要声明可能发生的异常
+
+    * ```java
+      public FileInputStream(String name) throws FileNotFoundException
+      ```
+
+    * 抛出异常的四种情况
+
+      * 调用一个抛出受查异常的方法
+      * 程序运行时发现错误，并且利用throw抛出一个受查异常
+      * 程序出现错误
+      * Java虚拟机和运行库出现的内部错误
+
+    * 异常规范 exception specification
+
+    * 覆盖超类方法时，子类方法声明的受查异常不能比超类方法声明的异常更通用
+
+  * 抛出异常
+
+    * ``throw new EOFException();``
+
+  * 创建异常类
+
+    * ```java
+      class FileFormatException extends IOException {
+          public FileFormatException() {}
+      }
+      ```
+
+* 捕获异常
+
+  * ```java
+    try {
+        // code
+    } catch (Exception e) {
+        // handler
+    }
+    ```
+
+  * ```java
+    try {
+        // code
+    } catch (FileNotFoundException e) {
+        // handler
+    } catch (IOException e) {
+        // handler
+    }
+    ```
+
+  * 再次抛出和异常链
+
+    * ```java
+      try {
+          // access the database
+      } catch (SQLException e) {
+          Throwable se = new ServeletExcetption("database error");
+          se.initCause(e);
+          throw se;
+      }
+
+      ```
+
+  * ``finally``
+
+  * 带资源的try
+
+    * ```java
+      try (Resource res = ... ) {
+          // work with res
+      }
+      ```
+
+    * 资源需要实现AutoCloseable接口
+
+  * 分析堆栈轨迹（stack trace）元素
+
+    * ``exception.printStackTrace()``
+    * ``getStackTrace()``
+    * ``Thread.getAllStackTrace()``
+
+* 使用异常机制的技巧
+
+  * 异常处理不能代替简单的测试
+  * 不要过分细化异常
+  * 利用异常层次结构
+  * 不要压制异常
+  * 在检测到错误时，苛刻比放任更好（早抛出）
+  * 不要羞于传递异常（晚捕获）
+
+* 断言
+
+  * ``assert condition;``
+  * ``assert condition: statement;``
+  * 启用与禁用断言
+    * ``java -enableassertions MyApp`` ``-ea`` 默认禁用
+    * 启用和禁用断言时类加载器的功能，不必重新编译
+  * 断言是致命的、不可恢复的错误
+  * 断言检查只用于开发和测试阶段
+
+* 记录日志
+
+  * 基本日志
+
+    * 全局日志记录器global logger  ``Logger.getGlobal().info("File->Open menu item selected");``
+    * ``Logger.getGlobal().setLevel(Level.OFF);``
+
+  * 高级日志
+
+    * ``private static final Logger logger=Logger.getLogger("com.mycompany.myapp");``
+
+    * 7个日志记录级别
+
+      * ``SEVERE WARNING INFO CONFIG FINE FINER FINEST``
+
+    * 修改日志管理器配置
+
+      * 默认配置文件 ``jre/lib/logging.properties``
+
+      * 另外指定 ``java -Djava.util.logging.config.file=configFile MainClass``
+
+      * ```properties
+        .level=INFO
+        com.mycompany.myapp.level=FINE
+        ```
+
+      * 处理器级别 ``java.util.logging.ConsoleHandler.level=FINE``
+
+  * 本地化
+
+    * 资源包 resource bundle
+
+      * ``com/mycompany/logmessages_en.properties``
+      * ``com/mycompany/logmessages_de.properties``
+      * 消息占位符 ``{0} {1} ...``
+
+    * ```java
+      Logger logger=Logger.getLogger(loggerName,"com.mycompany.logmessages");
+      logger.info("readFile");
+
+      ```
+
+  * 处理器
+
+    * ConsoleHandler FileHandler SocketHandler
+    * 文件处理器配置参数
+      * ``java.util.logging.FileHandler`` ``level append limit pattern count filter encoding formatter``
+      * 日志记录文件模式变量 ``%h %f %u %g %%``
+      * 文件循环功能
+
+  * 过滤器
+
+  * 格式化器
+
+* 调试技巧
+
+  * ``System.out.println``或``Logger``打印变量
+  * 单独的main进行单元测试
+  * JUnit
+  * 日志代理``logging proxy``
+  * ``Throwable.printStackTrace``
+  * ``System.err System.out``错误流 输出流
+  * ``Thread.setDefaultUncaughtExceptionHandler``
+  * 使用``-verbose``标志启动虚拟机
+  * ``-Xlint``
+  * Java虚拟机监控管理Java应用程序
 
