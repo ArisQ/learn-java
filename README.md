@@ -1172,3 +1172,143 @@
   * ``-Xlint``
   * Java虚拟机监控管理Java应用程序
 
+
+### 泛型程序设计
+
+* 泛型程序设计 Generic programming
+
+  * 类型参数 type parameters：更好的可读性和安全性
+  * 通配符类型 wildcard type
+  * 泛型程序设计的3个能力级别
+    * 基本级别，仅仅使用泛型类
+    * 学习Java泛型来系统地解决问题
+    * 实现自己的泛型类和泛型方法
+
+* 定义简单的泛型类
+
+  * 泛型类 generic class：具有一个或多个类型变量的类
+
+  * ```java
+    public class Pari<T> {}
+    public class Pari<T,U> {}
+    ```
+
+  * 类型变量大写，且较短
+
+    * E表示集合的元素类型
+    * K/V表示关键字和值类型
+    * T/U/S表示任意类型
+
+* 泛型方法
+
+  * ```java
+    class ArrayAlg {
+        public static <T> T getMiddle(T... a) {}
+    }
+
+    ```
+
+* 类型变量的限定
+
+  * 限定（bound）
+
+  * ```java
+    public static <T extends Comparable> T min(T[] a) { }
+    T extends Comparable & Serializable
+    ```
+
+  * T是绑定类型的子类型（subtype）
+
+* 泛型代码和虚拟机
+
+  * 类型擦除
+
+    * 定义泛型时，自动提供一个相应的原始类型（raw type）
+    * 原始类型的名字是删去类型参数后的泛型类型名
+    * 擦除erased类型变量，替换为限定类型（无限定则用Object）
+
+  * 翻译类型表达式
+
+    * 擦除返回类型，编译器插入强制类型转换，如``Employee buddy=buddies.getFirst()``翻译为两条虚拟机指令
+      * 对原始方法调用
+      * 将返回的Object转换为Employee类型
+
+  * 翻译泛型方法
+
+    * 类型擦除与多态会发生冲突，编译器通过桥方法 bridge method解决冲突
+    * 虚拟机中用参数类型和返回类型确定一个方法
+    * Java泛型转换的事实
+      * 虚拟机没有泛型，只有普通类和方法
+      * 所有类型参数都用限定类型替换
+      * 桥方法被合成来保持多态
+      * 为保持类型安全性，必要时插入强制类型转换
+
+  * 调用遗留代码
+
+    * 注解（annotation）消除警告
+
+      * ```java
+        @SuppressWarning("unchecked")
+        Dictionary<Integer, Components> labelTable=slider.getTableTab();
+
+        @SuppressWarning("unchecked")
+        public void configureSlider() {}
+        ```
+
+* 约束和局限性
+
+  * *大多数限制是类型擦除引起的*
+
+  * 不能用基本类型实例化类型参数
+
+  * 运行时类型查询只适用于原始类型
+
+  * 不能创建参数化类型的数组
+
+  * Varargs警告
+
+    * ```java
+      public static <T> void addAll(Collection<T> coll, T... ts) {}
+      ```
+
+    * 可变参数会导致参数化类型的数组，但是会产生警告而不是错误
+
+    * 两种方法抑制警告
+
+      * ``@SupressWarning("unchecked")``
+      * ``@SafeVarargs``
+
+  * 不能实例化类型变量
+
+    * 不能调用``new T()``，因为类型擦除后为``new Object()``
+
+    * 可以让调用者提供构造器表达式来解决，如``Pair.makPair(String::new)``
+
+      * ```java
+        public static <T> Pair<T> makePair(Supplier<T> constr) {
+            return new Pair<>(constr.get(),constr.get())
+        }
+        ```
+
+    * 传统的方法是通过反射调用``Class.newInstance``
+
+      * ```java
+        public static <T> Pair<T> makePair(Class<T> cl) {
+            try { return new Pair<>(cl.newInstance(),cl.newInstance()); }
+            catch (Exception ex) { return null; }
+        }
+
+        Pair.makePair(String.class)
+        ```
+
+  * 不能构造泛型数组
+
+  * 泛型类的静态上下文中类型变量无效
+
+  * 不能抛出或捕获泛型类的实例
+
+  * 可以消除对受查异常的检查
+
+  * 注意擦除后的冲突
+
+  * ​
