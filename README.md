@@ -1255,7 +1255,7 @@
         public void configureSlider() {}
         ```
 
-* 约束和局限性
+* 约束和局限性 **TODO: 用到时需要仔细研究**
 
   * *大多数限制是类型擦除引起的*
 
@@ -1263,7 +1263,7 @@
 
   * 运行时类型查询只适用于原始类型
 
-  * 不能创建参数化类型的数组
+  * 不能创建参数化类型的数组 ``Pair<String>[10] // Error``
 
   * Varargs警告
 
@@ -1298,17 +1298,204 @@
             catch (Exception ex) { return null; }
         }
 
-        Pair.makePair(String.class)
+        Pair.makePair(String.class);
         ```
 
-  * 不能构造泛型数组
+  * 不能构造型数组
 
   * 泛型类的静态上下文中类型变量无效
 
+    * ```java
+      public class Singleton<T> {
+          private static T singleInstance; //Error
+          public static T getSingleInstance() {} // Error
+      }
+      ```
+
   * 不能抛出或捕获泛型类的实例
+
+    * ```java
+      public class Problem<T> extends Exception { } // Error
+      ```
 
   * 可以消除对受查异常的检查
 
   * 注意擦除后的冲突
 
-  * ​
+* 泛型类型的继承规则
+
+  * 无论S和T什么关系，``Pair<S>``和``Pair<T>``通常没什么关系，如Manager继承Employee，但``Pair<Manger>``和``Pair<Employee>``不是子类关系
+  * 可以将参数化类型转换为一个原始类型，如``Pair<Employee>``是原始类型``Pair``的一个子类型
+  * 泛型可以扩展或实现其他泛型类，如``ArrayList<T>``实现``List<T>``接口
+
+* 通配符类型
+
+  * 通配符类型中，允许类型参数变化，如通配符类型``Pair<? extends Employee>``表示任何泛型Pair类型，类型参数是Employee的子类
+  * 通配符超类型限定 supertype bound，如``? super Manager``限制为Manager的所有超类型
+  * 无限定通配符 ``Pair<T>``
+  * 通配符捕获
+
+* 反射与泛型
+
+  * ``Class``类是泛型，``Class<T>``，``String.class``是``Class<String>``类的对象
+
+### 集合
+
+* Java集合框架
+
+  * Java集合类库将接口（interface）与实现（implementation）分离
+
+  * 队列接口 queue
+
+  * 集合类的基本接口 Collection接口
+
+    * 两个基本方法：``add`` ``iterator``
+
+  * 迭代器 Iterator接口
+
+    * 包含四个方法：``next`` ``hasNext`` ``remove`` ``forEachRemaining``
+    * 任何实现了Iterable接口的对象都可以使用``for each``循环
+    * Java迭代器应该认为是两个元素之间的位置
+    * **remove会删除上次调用next返回的元素，调用remove之前必须调用next**
+
+  * 泛型实用方法
+
+    * ``size contains isEmpty containsAll equals addAll remove removeAll clear retainAll toArray``
+    * ``AbstractCollection``
+
+  * 集合框架中的接口
+
+    * ```
+      Iterable -- Collection -- Set -- SortedSet -- NavigableSet
+      Collection -- List
+      Collection -- Queue -- Deque
+      Map -- SortedMap -- NavigableMap
+      Iterator -- ListIterator
+      RandomAccess
+      ```
+
+* 具体的集合
+
+  * ``ArrayList LinkedList ArrayQueue HashSet TreeSet EnumSet LinkedHashSet PriorityQueue HashMap TreeMap EnumMap LinkedHashMap WeakHashMap IdentityHashMap``
+  * 链表 linked list
+    * Java中所有链表都是双向链表 doubly list
+    * ``LinkedList<>`` ``add() iterator() iter.next() iter.remove()``
+    * ``set``方法取代调用``next``或``previous``方法后返回的元素
+    * 迭代器发现集合被另一个迭代器或自身方法修改，则会抛出``ConcurrentModificationException`` 异常
+  * 数组列表 ArrayList
+    * Vector所有方法都是同步的，线程安全；ArrayList不是同步的
+  * 散列集
+    * 散列表 hash table 散列码 hash code
+    * 如果``a.equals(b)``则两者的必须具有相同的散列码
+    * 再散列 rehashed  装填因子load factor
+  * 树集TreeSet
+    * 有序集合 sorted collection
+    * 当前实现是红黑树red-black tree
+    * 树集的元素必须实现Comparable接口
+    * 添加元素到树比散列表慢，查找元素需要$log_{2}{n}$ 次比较
+  * 队列与双端队列Deque
+  * 优先级队列 priority queue
+    * 优先级使用堆heap数据结构，堆是自我调整的二叉树
+
+* 映射map
+
+  * Java类库为映射提供两个通用的实现HashMap和TreeMap，都实现类Map接口
+
+  * 散列或比较函数只能作用于键
+
+  * 键必须唯一
+
+  * 更新映射项
+
+    * ``getOrDefault putIfAbsent merge``
+
+  * 映射视图
+
+    * 三种视图View：键集、值集合、键值对集
+
+      * ```java
+        Set<K> keySet()
+        Collection<V> values()
+        Set<Map.Entry<K, V>> entrySet()
+        ```
+
+  * 弱散列映射 WeakHashMap
+
+    * WeakHashMap使用弱引用（weak reference）保存键
+
+  * 链接散列集与映射
+
+    * LinkedHashSet LinkedHashMap会记住元素项的顺序
+    * 链接散列映射用访问顺序而不是插入顺序，对映射条目进行迭代
+
+  * 枚举集与映射 EnumSet EnumMap
+
+  * 标识散列映射 IdentityHashMap
+
+    * 键的散列值用``System.identityHashCode``计算，而不是``hashCode``函数进行计算
+    * IdentityHashMap使用``==``而不是``equals``进行对象比较
+
+* 视图与包装器
+
+  * 视图是实现了接口（如keySet返回实现类Set接口）的类对象，类的方法对原映射进行操作
+
+  * 轻量级集合包装器  Arrays类的静态方法``asList``返回一个包装类普通Java数组的List包装器
+
+  * 子范围subrange ``subList``
+
+  * 不可修改的视图unmodifiable views
+
+    * 8中方法获得不可修改视图
+
+    * ```java
+      Collections.unmodifiableCollection
+      Collections.unmodifiableList
+      Collections.unmodifiableSet
+      Collections.unmodifiableSortedSet
+      Collections.unmodifiableNavigableSet
+      Collections.unmodifiableMap
+      Collections.unmodifiableSortedMap
+      Collections.unmodifiableNavigableMap
+      ```
+
+  * 同步视图
+
+    * 使用视图机制确保常规集合的线程安全
+    * ``Collections.synchronizedMap``
+
+  * 受查视图 ``Collections.checkedList``
+
+  * 可选操作
+
+    * ``UnsupportedOperationException``
+
+* 算法
+
+  * 排序与混排
+    * ``Collections.sort``
+    * 归并排序的优点：稳定
+    * ``Collections.shuffle``
+  * 二分查找
+    * ``Collections.binarySearch``
+  * 简单算法
+    * ``replaceALL removeIf min max``
+  * 批操作
+    * ``removeAll retainAll``
+  * 集合与数组的转换
+    * ``asList toArray``
+  * 编写自己的算法
+
+* 遗留的集合
+
+  * Hashtable类，Hashtable是同步的，应使用HashMap和ConcurrentHashMap代替
+  * 枚举 Enumeration接口，两个方法``hasMoreElements nextElement``，``Collections.enumeration``
+
+  * 属性映射 property map，类称为Properties，属性映射通常用于程序的特殊配置选型
+    * 键值都是字符串
+    * 可以保存到文件中
+    * 使用一个默认的辅助表
+  * 栈 Stack
+    * 包含push pop方法，Stack扩展Vector类
+  * 位集 BitSet类
+
+
