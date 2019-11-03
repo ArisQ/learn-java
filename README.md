@@ -1580,7 +1580,85 @@
         defaultProperties.setProperty("title", "Default title");
         // other setProperty ...
         Properties settings=new Properties(defaultProperties);
-
         ```
 
-  * 是
+  * 首选项API
+
+    * ``Preferences``类 与平台有关，在Windows上使用注册表，在Linux上使用文件系统
+    * ``Preferences`` 采用树状结构
+    * ``Preferences.userRoot() Preferences.systemRoot()``
+    * ``root.node("com/mycompany/myapp")``
+    * 如果节点路径名等于类包名，则可以使用便捷方法 ``Preferences.userNodeForPackage(obj.getClass())`` 或 ``Preferences.userNodeForPackage(obj.getClass())``
+    * ``get getInt getLong getFloat getDouble getBoolean getByteArray`` 需要指定默认值
+    * ``exportSubtree exportNode``
+
+* 服务加载器 ``ServiceLoader``
+
+  * ``META-INF/services``
+
+* applet
+
+  * applet是包含在HTML页面中的Java程序
+  * 略
+
+* Java Web Start
+
+  * Java Web Start是在Internet上发布应用程序的技术
+  * Java Network Launch Protocol (JNLP)
+  * 创建JNLP格式的描述文件并放置到Web服务器上
+  * JNLP的MIME需要为``application/x-java-jnlp-file``
+
+### 并发
+
+* 线程 thread、多线程multithread
+
+* ```java
+  public interface Runnable {
+      void run();
+  }
+  Runnable r=()->{ /* task */ }
+  Thread t=new Thread(r);
+  t.start();
+  ```
+
+* ``interrupt`` 方法
+
+  * ``Thread.currentThread().isInterrupted``获取当前线程中断状态是否置位
+
+* 线程状态
+
+  * 6种状态
+
+    * New 新创建
+    * Runnable 可运行
+    * Blocked 被阻塞
+    * Waiting 等待
+    * Timed  waiting 计时等待
+    * Terminated 被终止
+
+  * ```mermaid
+    graph LR
+    新创建 --开始--> 可运行
+    可运行 --请求锁--> 被阻塞
+    被阻塞 --得到锁--> 可运行
+    可运行 --等待通知--> 等待
+    等待 --出现通知--> 可运行
+    可运行 --等待超时或通知--> 计时等待
+    计时等待 --出现超时或通知--> 可运行
+    可运行 --运行方法exits--> 被终止
+    ```
+
+* 线程属性
+
+  * 线程优先级
+    * 线程默认继承父线程优先级
+    * ``setPrioritye``提高或降低线程优先级
+    * ``MIN_PRIORITY MAX_PRIORITY`` 在Thread类中定义分别为1和10
+  * 守护线程 daemon thread
+    * ``t.setDaemon(true);``
+  * 线程组
+    * ``ThreadGroup``
+  * 处理未捕获异常的处理器
+    * ``Thread.UncaughtExceptionHandler`` 接口
+      * ``void uncaughtException(Thread t, Throwable e)``
+
