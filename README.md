@@ -1499,3 +1499,88 @@
   * 位集 BitSet类
 
 
+### 图形程序设计
+
+略
+
+### 事件处理
+
+略
+
+### Swing用户界面组件
+
+略
+
+### 部署Java应用程序
+
+* JAR文件
+
+  * JAR文件使用ZIP压缩格式
+
+  * 创建JAR文件 ``jav cvf JARFileName File1 File2 ...``
+
+    * jar选项 ``c C e f i m M t u v x 0``
+
+  * JDK运行时库 ``rt.jar``
+
+  * 清单文件manifest
+
+    * 清单文件被命名为``MANIFEST.MF``位于META-INF子目录
+
+    * 最小内容 ``Manifest-Version: 1.0``
+
+    * 复杂的清单文件包含条目，条目被分成多节，第一节称为主节 main section，主节作用于整个JAR文件，随后的条目指明已命名条目（可以是文件、包、URL，必须起始于名为Name的条目）的属性， 节与节之间用空行分开
+
+      * ```
+        Manifest-Version: 1.0
+        描述这个归档文件的行
+
+        Name: Woozle.class
+        描述这个文件的行
+        Name: com/mycompany/mypkg/
+        描述这个包的行
+
+        ```
+
+    * ```shell
+      jar cfm JARFileName ManifestFile Name ... # 编辑清单文件，加入到清单文件
+      jar ufm MyArchive.jar manifest-additions.mf # 更新JAR文件的清单
+
+      ```
+
+  * 可执行JAR文件
+
+    * ``e``选项指定程序入口点
+      * ``jar cfve MyProgram.jar com.mycompany.mypkg.MainAppClass files_to_add``
+    * 运行 ``java -jar MyProgram.jar``
+
+  * 资源resource
+
+    * 文件自动装载
+    * 国际化
+
+  * 密封seal
+
+    * 在清单文件主节中加入``Sealed: true``
+
+* 应用首选项的存储
+
+  * 属性映射 property map
+
+    * ``Properties settings=new Properties()``
+
+    * 获取主目录 ``System.getProperties("user.home")``
+
+    * 两种默认值机制
+
+      * ``settings.getProperties("title", "Default title");``
+
+      * ```java
+        Properties defaultProperties=new Properties();
+        defaultProperties.setProperty("title", "Default title");
+        // other setProperty ...
+        Properties settings=new Properties(defaultProperties);
+
+        ```
+
+  * 是
