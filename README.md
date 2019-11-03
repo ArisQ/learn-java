@@ -1662,3 +1662,57 @@
     * ``Thread.UncaughtExceptionHandler`` 接口
       * ``void uncaughtException(Thread t, Throwable e)``
 
+* 同步
+
+  * 竞争条件 race condition
+
+  * 锁对象
+
+    * ``ReetrantLock``类
+    * 锁是可重入的
+    * 锁保持一个持有计数hold count来跟踪lock方法的嵌套调用
+
+  * 条件对象
+
+    * 条件变量 condition variable
+    * ``await signalAll``
+    * 死锁dead lock
+
+  * ``synchronized`` 关键字
+
+    * ``wait notifyAll``
+
+  * 同步阻塞
+
+    * ```java
+      synchronized(lock) {
+          // do work
+      }
+      ```
+
+  * 监视器monitor
+
+  * Volatitle域
+
+  * final变量
+
+  * 原子性
+
+    * ``AtomicInteger AtmoicIntegerArray``
+
+  * 死锁deadlock
+
+  * 线程局部变量
+
+    * ``ThreadLocal``
+
+  * 锁测试与超时
+
+    * ``tryLock``
+
+  * 读写锁
+
+    * ``ReentrantReadWriteLock``
+
+  * ``stop suspend resume``已弃用
+
