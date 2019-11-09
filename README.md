@@ -1716,3 +1716,78 @@
 
   * ``stop suspend resume``已弃用
 
+* 阻塞队列 blocking queue
+
+  * | 操作\特殊情况动作 | 抛出异常                        | 阻塞 | 返回null | 返回false |
+    | ----------------- | ------------------------------- | ---- | -------- | --------- |
+    | 添加元素          | add(IllegalStateException)      | put  |          | offer     |
+    | 移出并返回头元素  | remove(NoSuchElementException)  | take | poll     |           |
+    | 返回头元素        | element(NoSuchElementException) |      | peek     |           |
+
+  * ``java.util.concurrent``
+
+    * ``LinkedBlockingQueue LinkedBlockingDeque ArrayBlockingQueue PriorityBlockingQueue Delayed TransferQueue LinkedTransferQueue ``
+
+* 线程安全的集合
+
+  * ``java.util.concurrent``
+    * 映射、有序集和队列 ``ConcurrentHashMap、ConcurrentSkipListMap ConcurrentSkipListSet ConcurrentLinkedQueue``
+    * size通常需要遍历，不在常量时间内完成
+    * 集合返回弱一致性（weakly consistent）迭代器：不一定能反映所有的修改，不会将同一个值返回两次，不会抛出``ConcurrentModificationException``异常
+    * 并发散列映射列表可支持16个写线程同时执行，超出则其他线程被阻塞。可以指定更大数目，但一般没必要
+    * Java SE 8中，散列映射将桶组织为树而不是列表，保证性能为``O(log(n))``
+  * 映射条目的原子更新
+    * ``compute computeIfPresent computeIfAbsent``
+    * ``merge``
+  * 并发散列映射的批操作
+    * 3种不同的操作
+      * 搜索 search
+      * 归约 reduce
+      * forEach
+    * 每个操作有4个版本 ``operationKeys operationValues operation operationEntries``
+    * 参数化阈值 parallelism threshold
+  * 并发集视图 ``newKeySet keySet``
+  * 写拷贝数组 ``CopyOnWriteArrayList CopyOnWriteArraySet``
+  * 并行数组算法 ``Arrays.parallelSort  parrallelSetAll parallelPrefix``
+  * 较早的线程安全集合 ``Vector Hashtable ``
+    * 任何集合类都可以通过使用同步包装器``synchronization wrapper``变成线程安全
+
+* Callable和Future
+
+  * FutureTask包装器，可将Callable转换为Future和Runnable
+
+* 执行器
+
+  * 线程池thread pool
+    * ``submit``
+  * 执行器 Executor类有许多静态工作来构建线程池
+    * ``newCachedThreadPool newFixedThreadPool newSingleThreadExecutor newScheduledThreadPool newSingleThreadScheduledExecutor``
+  * 预定执行
+    * ``ScheduledExecutorService``
+  * 控制任务组 ``shutdownNow invokeAny``
+  * Fork-Join框架
+    * ``RecursiveTask<T> RecursiveAction``
+    * 工作密取 work stealing
+  * 可完成Future ``CompletableFuture``
+    * 增加动作
+      * ``thenApply thenCompose handle thenAccept whenComplete thenRun``
+        * ``handle``处理异常
+    * 组合对象
+      * ``thenCombine thenAcceptBoth runAfterBoth applyToEither acceptEither runAfterEither``
+      * ``static allOf``
+      * ``static anyOf``
+
+* 同步器
+
+  * 共用集结点模式 common rendezvous patterns
+  * CyclicBarrier 障栅
+  * Phaser 
+  * CountDownLatch 倒计时门栓
+  * Exchanger 同步队列
+  * Semaphore 信号量
+  * SynchronousQueue 同步队列
+
+* 线程与Swing
+
+  * 略
+
